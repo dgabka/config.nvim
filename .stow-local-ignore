@@ -1,0 +1,6 @@
+\.git
+\.luacheckrc
+\.pre-commit-config\.yaml
+stylua\.toml
+.+\.sh
+README\.md
