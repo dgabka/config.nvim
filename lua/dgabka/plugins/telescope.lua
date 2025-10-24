@@ -108,7 +108,7 @@ return {
       end
 
       if is_inside_work_tree[cwd] then
-        builtin.git_files(get_ivy { show_untracked = false })
+        builtin.git_files(get_ivy { show_untracked = true })
       else
         builtin.find_files(get_ivy())
       end
