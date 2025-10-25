@@ -1,0 +1,52 @@
+{
+  "import": {
+    "prefix": "imp",
+    "body": "import { ${2:} } from '${1:module}';"
+  },
+  "import default": {
+    "prefix": "impd",
+    "body": "import ${2:default} from '${1:module}';"
+  },
+  "try/catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t${0}",
+      "} catch (${1:err}) {",
+      "\t// TODO: handle error",
+      "}"
+    ]
+  },
+  "fn statement": {
+    "prefix": "fn",
+    "body": [
+      "function ${1:name}(${2:params})${3:type} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "export fn statement": {
+    "prefix": "efn",
+    "body": [
+      "export function ${1:name}(${2:params})${3:type} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "fn expression": {
+    "prefix": "fx",
+    "body": [
+      "const ${1:name} = (${2:params})${3:type}=> {",
+      "\t$0",
+      "};"
+    ]
+  },
+  "export fn expression": {
+    "prefix": "efx",
+    "body": [
+      "export const ${1:name} = (${2:params})${3:type} => {",
+      "\t$0",
+      "};"
+    ]
+  }
+}

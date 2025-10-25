@@ -1,0 +1,42 @@
+{
+  "import module": {
+    "prefix": "imp",
+    "body": "import ${2:*} from '${1:module}'"
+  },
+  "try/catch": {
+    "prefix": "try",
+    "body": "try {\n\t${0}\n} catch (${1:err}) {\n\t\n}"
+  },
+  "fn statement": {
+    "prefix": "fun",
+    "body": [
+      "function ${1:name}(${2:params}): ${3:returnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "export fn statement": {
+    "prefix": "efun",
+    "body": [
+      "export function ${1:name}(${2:params}): ${3:returnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "fn expression": {
+    "prefix": "fx",
+    "body": [
+      "const ${1:name} = (${2:params}) => {",
+      "\t$0",
+      "};"
+    ]
+  },
+  "export fn expression": {
+    "prefix": "efx",
+    "body": [
+      "export const ${1:name} = (${2:params}) => {",
+      "\t$0",
+      "};"
+    ]
+  }
+}
