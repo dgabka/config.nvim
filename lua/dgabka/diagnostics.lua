@@ -1,10 +1,10 @@
 vim.diagnostic.config {
-  virtual_text = false,
+  virtual_text = true,
   update_in_insert = true,
-  severity_sort = true,
+  severity_sort = false,
   float = {
     header = "",
-    border = "rounded",
+    border = "solid",
     style = "minimal",
     prefix = "",
   },

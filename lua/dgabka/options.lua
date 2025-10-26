@@ -17,7 +17,7 @@ vim.opt.splitright = true
 vim.opt.autoread = true -- reload files changed outside of vim
 vim.opt.inccommand = "split"
 vim.opt.swapfile = false
--- vim.opt.winborder = "solid"
+vim.opt.winborder = "solid"
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menu,menuone,noselect"
