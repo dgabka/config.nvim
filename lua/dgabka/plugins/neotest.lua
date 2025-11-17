@@ -19,6 +19,7 @@ return {
     require("neotest").setup {
       adapters = {
         require "neotest-vitest",
+        require "rustaceanvim.neotest",
       },
     }
 
