@@ -5,6 +5,15 @@ return {
   ft = { "rust" },
   config = function()
     vim.g.rustaceanvim = {
+      server = {
+        default_settings = {
+          ["rust-analyzer"] = {
+            files = {
+              excludeDirs = { ".direnv", "target" },
+            },
+          },
+        },
+      },
       tools = {
         float_win_config = {
           border = "solid",

@@ -31,6 +31,7 @@ return {
       terraform = { "terraform_fmt" },
       hcl = { "terragrunt_hclfmt" },
       html = { lsp_fallback = true },
+      rust = { "rustfmt" },
     },
     formatters = {
       yamlfmt = {
