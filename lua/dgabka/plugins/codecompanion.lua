@@ -27,8 +27,8 @@ end
 local function get_adapters()
   local hostname = get_hostname()
 
-  local use_openai = (hostname == "WHM5006336.local")
-  local adapter = use_openai and "openai" or "anthropic"
+  local use_copilot = (hostname == "WHM5006336.local")
+  local adapter = use_copilot and "copilot" or "anthropic"
 
   return {
     chat = { adapter = adapter },
@@ -57,18 +57,6 @@ return {
             name = "claude",
             env = {
               api_key = "cmd:printf '%s' \"$(pass show anthropic/api)\"",
-            },
-          })
-        end,
-        openai = function()
-          return require("codecompanion.adapters").extend("openai", {
-            schema = {
-              model = {
-                default = "gpt-5-2025-08-07",
-              },
-            },
-            env = {
-              api_key = "cmd:printf '%s' \"$(pass show openai-wh/api)\"",
             },
           })
         end,
