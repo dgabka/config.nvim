@@ -21,6 +21,8 @@ return {
             default_workspace = "notes",
           },
         },
+        ["core.export"] = {},
+        ["core.export.markdown"] = {},
       },
     }
     vim.wo.foldlevel = 99
