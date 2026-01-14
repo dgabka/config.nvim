@@ -18,6 +18,8 @@ vim.opt.autoread = true -- reload files changed outside of vim
 vim.opt.inccommand = "split"
 vim.opt.swapfile = false
 vim.opt.winborder = "solid"
+vim.opt.spelllang = { "en_us", "en_gb" } -- use american & british english wordlists
+vim.opt.spelloptions = "camel" -- treat camelCase as separate words
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menu,menuone,noselect"
