@@ -24,3 +24,5 @@ vim.opt.spelloptions = "camel" -- treat camelCase as separate words
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menu,menuone,noselect"
 vim.o.termguicolors = true
+
+vim.o.conceallevel = 2 -- 1 or 2 required by obsidian.nvim
