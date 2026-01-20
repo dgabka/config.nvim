@@ -62,6 +62,25 @@ return {
     },
     notes_subdir = "00-inbox",
     new_notes_location = "notes_subdir",
+    note_id_func = function(title)
+      local suffix = ""
+      if title ~= nil and title ~= "" then
+        -- Slugify the title: lowercase, replace spaces/special chars with hyphens
+        suffix = title
+          :lower()
+          :gsub("[^%w%s-]", "") -- Remove special characters except spaces and hyphens
+          :gsub("%s+", "-") -- Replace spaces with hyphens
+          :gsub("-+", "-") -- Replace multiple hyphens with single hyphen
+          :gsub("^-+", "") -- Remove leading hyphens
+          :gsub("-+$", "") -- Remove trailing hyphens
+      else
+        -- Generate random suffix if no title
+        for _ = 1, 6 do
+          suffix = suffix .. string.char(math.random(65, 90))
+        end
+      end
+      return os.date(date_format) .. "_" .. suffix
+    end,
     daily_notes = {
       folder = "40-journal",
       default_tags = { "journal" },
