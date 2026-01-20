@@ -24,6 +24,11 @@ set("n", "<space>tt", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 }, { bufnr = 0 })
 end)
 
+-- toggle line wrap
+set("n", "<leader>tw", function()
+  vim.wo.wrap = not vim.wo.wrap
+end, { desc = "Toggle wrap" })
+
 -- These mappings control the size of splits (height/width)
 set("n", "<M-,>", "<c-w>5<")
 set("n", "<M-.>", "<c-w>5>")

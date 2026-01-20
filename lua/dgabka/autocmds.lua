@@ -30,13 +30,3 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.breakindent = true
   end,
 })
-
-local spell_group = augroup("dgabka_spellcheck", { clear = true })
-
-autocmd("FileType", {
-  group = spell_group,
-  pattern = { "markdown", "text", "plaintext", "norg" },
-  callback = function()
-    vim.opt_local.spell = true
-  end,
-})
