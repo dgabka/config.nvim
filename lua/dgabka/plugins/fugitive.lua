@@ -6,4 +6,5 @@ return {
     { "<leader>gs", "<cmd>0G<CR>", desc = "Fugitive satus" },
     { "<leader>gl", "<cmd>0Gclog<CR>", desc = "File revision history" },
   },
+  cmd = { "Git", "G" }, -- Ensure Fugitive loads for :Git and :G commands
 }

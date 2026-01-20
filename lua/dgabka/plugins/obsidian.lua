@@ -1,3 +1,5 @@
+local slugify = require("dgabka.utils.str_utils").slugify
+
 local notes_dir = os.getenv "OBSIDIAN_VAULT"
 local enable_obsidian = notes_dir ~= nil and notes_dir ~= ""
 local date_format = "%Y-%m-%d"
@@ -66,13 +68,7 @@ return {
       local suffix = ""
       if title ~= nil and title ~= "" then
         -- Slugify the title: lowercase, replace spaces/special chars with hyphens
-        suffix = title
-          :lower()
-          :gsub("[^%w%s-]", "") -- Remove special characters except spaces and hyphens
-          :gsub("%s+", "-") -- Replace spaces with hyphens
-          :gsub("-+", "-") -- Replace multiple hyphens with single hyphen
-          :gsub("^-+", "") -- Remove leading hyphens
-          :gsub("-+$", "") -- Remove trailing hyphens
+        suffix = slugify(title)
       else
         -- Generate random suffix if no title
         for _ = 1, 6 do
@@ -89,6 +85,14 @@ return {
       subdir = "templates",
       date_format = date_format,
       time_format = time_format,
+      customizations = {
+        person = {
+          notes_subdir = "20-areas/work/people",
+          note_id_func = function(title)
+            return slugify(title)
+          end,
+        },
+      },
     },
     completion = {
       blink = true,
