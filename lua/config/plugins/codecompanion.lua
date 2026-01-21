@@ -1,4 +1,4 @@
-local host_utils = require "dgabka.utils.host"
+local host_utils = require "config.utils.host"
 
 local function get_adapters()
   -- Use copilot adapter for work environment, anthropic for others

@@ -1,4 +1,4 @@
-local slugify = require("dgabka.utils.str_utils").slugify
+local slugify = require("config.utils.str_utils").slugify
 
 local notes_dir = os.getenv "OBSIDIAN_VAULT"
 local enable_obsidian = notes_dir ~= nil and notes_dir ~= ""
