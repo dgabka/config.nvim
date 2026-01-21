@@ -1,7 +1,7 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local checktime_group = augroup("dgabka_autoread_checktime", { clear = true })
+local checktime_group = augroup("config_autoread_checktime", { clear = true })
 
 autocmd({ "FocusGained", "TermClose", "TermLeave", "CursorHold", "CursorHoldI" }, {
   group = checktime_group,
@@ -12,7 +12,7 @@ autocmd({ "FocusGained", "TermClose", "TermLeave", "CursorHold", "CursorHoldI" }
   end,
 })
 
-local notify_group = augroup("dgabka_autoread_notify", { clear = true })
+local notify_group = augroup("config_autoread_notify", { clear = true })
 
 autocmd("FileChangedShellPost", {
   group = notify_group,
@@ -34,19 +34,18 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_user_command("NotesGitPush", function()
-  local notes_dir = os.getenv("OBSIDIAN_VAULT")
+  local notes_dir = os.getenv "OBSIDIAN_VAULT"
   if not notes_dir or notes_dir == "" then
     vim.notify("OBSIDIAN_VAULT is not set.", vim.log.levels.ERROR)
     return
   end
-  local date = os.date("%Y-%m-%d")
+  local date = os.date "%Y-%m-%d"
   local commit_msg = date .. " notes"
   -- Save current directory to restore later
   local cwd = vim.fn.getcwd()
   vim.cmd("cd " .. notes_dir)
-  vim.cmd("G add .")
+  vim.cmd "G add ."
   vim.cmd("G commit -m '" .. commit_msg .. "'")
-  vim.cmd("G push")
+  vim.cmd "G push"
   vim.cmd("cd " .. cwd)
 end, { desc = "Stage, commit, and push notes using Fugitive" })
-

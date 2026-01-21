@@ -1,1 +1,1 @@
-require "dgabka"
+require "config"
