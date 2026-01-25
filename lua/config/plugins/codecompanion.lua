@@ -12,8 +12,6 @@ local function get_adapters()
   }
 end
 
-local fmt = string.format
-
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -24,14 +22,45 @@ return {
   },
   cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanion" },
   opts = {
+    prompt_library = {
+      markdown = {
+        dirs = {
+          vim.fn.getcwd() .. "/.prompts", -- Can be relative
+        },
+      },
+    },
     strategies = get_adapters(),
     adapters = {
+      acp = {
+        codex = function()
+          return require("codecompanion.adapters").extend("codex", {
+            defaults = {
+              auth_method = "chatgpt", -- "openai-api-key"|"codex-api-key"|"chatgpt"
+            },
+          })
+        end,
+      },
       http = {
         anthropic = function()
           return require("codecompanion.adapters").extend("anthropic", {
             name = "claude",
             env = {
               api_key = "cmd:printf '%s' \"$(pass show anthropic/api-key)\"",
+            },
+          })
+        end,
+        ollama = function()
+          return require("codecompanion.adapters").extend("ollama", {
+            env = {
+              url = "http://192.168.70.3:11434",
+              model_for_url = "schema.model.default",
+            },
+            schema = {
+              model = { default = "glm-4.7-flash" },
+            },
+
+            headers = {
+              ["Content-Type"] = "application/json",
             },
           })
         end,
