@@ -32,6 +32,7 @@ return {
       hcl = { "terragrunt_hclfmt" },
       html = { lsp_fallback = true },
       rust = { "rustfmt" },
+      python = { "black" },
     },
     formatters = {
       yamlfmt = {
