@@ -10,7 +10,7 @@ return {
       require("sageveil").setup {
         style = {
           italic = false,
-          transparent = true,
+          transparent = false,
         },
       }
       vim.cmd.colorscheme "sageveil"
