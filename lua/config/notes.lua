@@ -46,6 +46,7 @@ end
 local function finish_review()
   vim.keymap.del("n", "<leader>nm")
   vim.keymap.del("n", "<leader>nd")
+  vim.keymap.del("n", "<leader>nr")
   vim.keymap.del("n", "<leader>fr")
   pcall(vim.cmd.cclose)
 end
@@ -137,6 +138,9 @@ local function review_inbox()
 
   vim.keymap.set("n", "<leader>nm", move_note, { desc = "Move note" })
   vim.keymap.set("n", "<leader>nd", delete_note, { desc = "Delete note" })
+  vim.keymap.set("n", "<leader>nr", function()
+    vim.cmd "CodeCompanion /review-note"
+  end, { desc = "Delete note" })
   vim.keymap.set("n", "<leader>fr", finish_review, { desc = "Finish review" })
 
   vim.fn.setqflist(inbox_notes, " ")

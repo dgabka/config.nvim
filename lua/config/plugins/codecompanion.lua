@@ -49,21 +49,6 @@ return {
             },
           })
         end,
-        ollama = function()
-          return require("codecompanion.adapters").extend("ollama", {
-            env = {
-              url = "http://192.168.70.3:11434",
-              model_for_url = "schema.model.default",
-            },
-            schema = {
-              model = { default = "glm-4.7-flash" },
-            },
-
-            headers = {
-              ["Content-Type"] = "application/json",
-            },
-          })
-        end,
       },
     },
   },

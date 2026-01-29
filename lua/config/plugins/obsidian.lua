@@ -107,6 +107,12 @@ return {
       enabled = true,
       sort = { "id", "aliases", "tags", "created", "updated" },
       func = function(note)
+        local path_relative = note.path.vault_relative_path(note.path) or ""
+        -- ignore .prompts directory
+        if string.find(path_relative, ".prompts") ~= nil then
+          return note.metadata
+        end
+
         local out = {
           id = note.id,
           created = os.date(date_time_format),
