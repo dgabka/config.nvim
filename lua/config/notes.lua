@@ -79,7 +79,7 @@ local function move_file(target_dir, bufnr)
     return
   end
 
-  vim.api.nvim_buf_set_name(bufnr, target)
+  vim.api.nvim_buf_delete(bufnr, { force = true })
   vim.cmd.edit(vim.fn.fnameescape(target))
 
   local ok2 = pcall(vim.cmd.cnext)
@@ -90,25 +90,48 @@ local function move_file(target_dir, bufnr)
   end
 end
 
+-- variables declaration to allow mutual recursion
+local pick_dir, create_dir
+
+--- Prompt user to create a new directory, then return to pick_dir
+---@param base_path string
+---@param bufnr number
+function create_dir(base_path, bufnr)
+  local rel_path = vim.fs.relative(base_path, notes_dir)
+  vim.ui.input({ prompt = "New folder name (relative to " .. rel_path .. "): " }, function(input)
+    if not input or input == "" then
+      pick_dir(base_path, bufnr)
+      return
+    end
+    local new_dir = vim.fs.joinpath(base_path, input)
+    local ok, err = pcall(vim.fn.mkdir, new_dir, "p")
+    if not ok then
+      vim.notify("Failed to create directory: " .. tostring(err), vim.log.levels.ERROR)
+    end
+    pick_dir(base_path, bufnr)
+  end)
+end
+
 --- recursive fn to interactively pick directory
 ---@param path string
 ---@param bufnr number
-local function pick_dir(path, bufnr)
+function pick_dir(path, bufnr)
   local selections = {}
   for name, _type in vim.fs.dir(path) do
     if _type == "directory" and string.sub(name, 1, 1) ~= "." and name ~= inbox then
       table.insert(selections, name)
     end
   end
-  -- TODO: consider possibility of adding directories
-  -- table.insert(selections, "New folder")
   table.insert(selections, "> here")
+  table.insert(selections, "+ new folder")
   vim.ui.select(selections, { prompt = "Move note to:" }, function(choice)
     if not choice then
       return
     end
     if choice == "> here" then
       return move_file(path, bufnr)
+    elseif choice == "+ new folder" then
+      return create_dir(path, bufnr)
     else
       return pick_dir(vim.fs.joinpath(path, choice), bufnr)
     end
