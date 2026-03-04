@@ -45,3 +45,6 @@ set("n", "<CR>", function()
     return vim.keycode "<CR>"
   end
 end, { expr = true })
+
+set("n", "<leader>dl", ":%diffget _LOCAL_<CR>", { desc = "Pick local changes" })
+set("n", "<leader>dr", ":%diffget _REMOTE_<CR>", { desc = "Pick changes from remote" })
