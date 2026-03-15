@@ -1,9 +1,7 @@
 local host_utils = require "config.utils.host"
 
 local function get_adapters()
-  -- Use copilot adapter for work environment, anthropic for others
-  local use_copilot = host_utils.is_work()
-  local adapter = use_copilot and "copilot" or "anthropic"
+  local adapter = host_utils.is_work() and "codex" or "claude_code"
 
   return {
     chat = { adapter = adapter },
@@ -36,6 +34,13 @@ return {
           return require("codecompanion.adapters").extend("codex", {
             defaults = {
               auth_method = "chatgpt", -- "openai-api-key"|"codex-api-key"|"chatgpt"
+            },
+          })
+        end,
+        claude_code = function()
+          return require("codecompanion.adapters").extend("claude_code", {
+            env = {
+              CLAUDE_CODE_OAUTH_TOKEN = "cmd:printf '%s' \"$(pass show anthropic/claude-code-token)\"",
             },
           })
         end,
