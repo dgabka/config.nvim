@@ -97,7 +97,7 @@ local pick_dir, create_dir
 ---@param base_path string
 ---@param bufnr number
 function create_dir(base_path, bufnr)
-  local rel_path = vim.fs.relative(base_path, notes_dir)
+  local rel_path = base_path:gsub(vim.pesc(notes_dir) .. "/?", "")
   vim.ui.input({ prompt = "New folder name (relative to " .. rel_path .. "): " }, function(input)
     if not input or input == "" then
       pick_dir(base_path, bufnr)
