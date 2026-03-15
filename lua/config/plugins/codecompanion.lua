@@ -19,6 +19,33 @@ return {
     "nvim-treesitter/nvim-treesitter",
   },
   cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanion" },
+  keys = {
+    { "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "Toggle chat" },
+    { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Actions" },
+    { "<leader>ad", "<cmd>CodeCompanionChat Add<cr>", mode = "v", desc = "Add selection to chat" },
+    { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = "v", desc = "Inline prompt" },
+  },
+  config = function(_, opts)
+    require("codecompanion").setup(opts)
+
+    local handle
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "CodeCompanionRequest*",
+      callback = function(args)
+        if args.match == "CodeCompanionRequestStarted" then
+          handle = require("fidget.progress.handle").create {
+            title = "CodeCompanion",
+            lsp_client = { name = "codecompanion" },
+          }
+        elseif args.match == "CodeCompanionRequestFinished" then
+          if handle then
+            handle:finish()
+            handle = nil
+          end
+        end
+      end,
+    })
+  end,
   opts = {
     prompt_library = {
       markdown = {

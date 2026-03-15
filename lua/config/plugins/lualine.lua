@@ -26,7 +26,6 @@ return {
       lualine_c = { { "filename", path = 1 }, { "diff", colored = true, source = diff_source } },
       lualine_x = {
         "diagnostics",
-        require("config.lualine-codecompanion-ext").status,
       },
       lualine_y = { "filetype", "location" },
       lualine_z = { "ObsessionStatus" },

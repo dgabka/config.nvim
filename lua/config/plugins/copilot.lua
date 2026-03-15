@@ -1,8 +1,35 @@
 local host = require "config.utils.host"
 
----@module "lazy"
----@type LazyPluginSpec
+if not host.is_work() then
+  return {}
+end
+
 return {
-  "github/copilot.vim",
-  enabled = host.is_work(),
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
+  },
+  {
+    "saghen/blink.cmp",
+    dependencies = { "fang2hou/blink-copilot" },
+    opts = {
+      sources = {
+        default = { "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+          },
+        },
+      },
+    },
+    opts_extend = { "sources.default" },
+  },
 }
