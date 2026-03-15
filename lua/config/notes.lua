@@ -207,3 +207,82 @@ end, {
   nargs = "*",
   complete = notes_complete,
 })
+
+--- Move current line to Done (you check an item, hit a keymap, it moves):
+local function move_to_done()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+  local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1]
+
+  if not line:match "^%s*%- %[x%]" then
+    vim.notify("Not a checked item", vim.log.levels.WARN)
+    return
+  end
+
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local done_row = nil
+  for i, l in ipairs(lines) do
+    if l:match "^## Done" then
+      done_row = i
+      break
+    end
+  end
+
+  if not done_row then
+    vim.notify("No '## Done' section found", vim.log.levels.WARN)
+    return
+  end
+
+  vim.api.nvim_buf_set_lines(bufnr, row, row + 1, false, {})
+  if done_row > row + 1 then
+    done_row = done_row - 1
+  end
+  vim.api.nvim_buf_set_lines(bufnr, done_row, done_row, false, { line })
+end
+
+--- Move ALL checked items to Done (bulk cleanup):
+local function move_all_to_done()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+  local done_row = nil
+  for i, l in ipairs(lines) do
+    if l:match "^## Done" then
+      done_row = i
+      break
+    end
+  end
+
+  if not done_row then
+    vim.notify("No '## Done' section found", vim.log.levels.WARN)
+    return
+  end
+
+  local checked, remaining = {}, {}
+  for i, l in ipairs(lines) do
+    if l:match "^%s*%- %[x%]" and i > done_row then
+      -- already in Done, keep it
+      table.insert(remaining, l)
+    elseif l:match "^%s*%- %[x%]" then
+      table.insert(checked, l)
+    else
+      table.insert(remaining, l)
+    end
+  end
+
+  -- rebuild: remaining lines, inserting checked items after ## Done
+  local result = {}
+  for _, l in ipairs(remaining) do
+    table.insert(result, l)
+    if l:match "^## Done" then
+      for _, c in ipairs(checked) do
+        table.insert(result, c)
+      end
+    end
+  end
+
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, result)
+end
+
+vim.keymap.set("n", "<leader>td", move_to_done, { desc = "Move checked item to Done" })
+vim.keymap.set("n", "<leader>tD", move_all_to_done, { desc = "Move all checked items to Done" })
