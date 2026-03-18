@@ -2,5 +2,5 @@
 ---@type LazySpec
 return {
   "tpope/vim-obsession",
-  event = "BufEnter",
+  event = "VeryLazy",
 }

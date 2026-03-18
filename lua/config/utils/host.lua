@@ -2,6 +2,9 @@
 ---@description Host detection utility module
 
 local M = {}
+local uv = vim.uv or vim.loop
+local cached_hostname
+local cached_environment
 
 -- Host mappings to environment names
 local HOST_MAPPINGS = {
@@ -13,6 +16,18 @@ local HOST_MAPPINGS = {
 ---Get the system hostname using various methods
 ---@return string hostname The system hostname or empty string if detection fails
 function M.get_hostname()
+  if cached_hostname ~= nil then
+    return cached_hostname
+  end
+
+  if uv and uv.os_gethostname then
+    local name = uv.os_gethostname()
+    if name and name:match "%S" then
+      cached_hostname = name:match "^%s*(.-)%s*$"
+      return cached_hostname
+    end
+  end
+
   -- Try a list of commands until one returns a non-empty result
   local cmds = {
     "hostname",
@@ -28,21 +43,28 @@ function M.get_hostname()
       fh:close()
       if name and name:match "%S" then
         -- Trim leading/trailing whitespace
-        return name:match "^%s*(.-)%s*$"
+        cached_hostname = name:match "^%s*(.-)%s*$"
+        return cached_hostname
       end
     end
   end
 
   -- Fallback to the HOSTNAME env var (sometimes unset on macOS)
   local env = os.getenv "HOSTNAME"
-  return (env and env:match "%S" and env:match "^%s*(.-)%s*$") or ""
+  cached_hostname = (env and env:match "%S" and env:match "^%s*(.-)%s*$") or ""
+  return cached_hostname
 end
 
 ---Get the environment name based on hostname
 ---@return string|nil environment The environment name ("work", "home", "lab") or nil if unknown
 function M.get_environment()
+  if cached_environment ~= nil then
+    return cached_environment
+  end
+
   local hostname = M.get_hostname()
-  return HOST_MAPPINGS[hostname]
+  cached_environment = HOST_MAPPINGS[hostname]
+  return cached_environment
 end
 
 ---Check if current host matches a specific environment

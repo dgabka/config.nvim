@@ -9,6 +9,14 @@ local function diff_source()
   end
 end
 
+local function obsession_status()
+  if vim.fn.exists("*ObsessionStatus") == 0 then
+    return ""
+  end
+
+  return vim.fn.ObsessionStatus()
+end
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -28,7 +36,7 @@ return {
         "diagnostics",
       },
       lualine_y = { "filetype", "location" },
-      lualine_z = { "ObsessionStatus" },
+      lualine_z = { obsession_status },
     },
     extensions = { "fugitive", "nvim-dap-ui", "oil", "trouble" },
   },

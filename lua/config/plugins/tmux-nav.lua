@@ -2,16 +2,33 @@
 ---@type LazySpec
 return {
   "alexghergh/nvim-tmux-navigation",
-  config = function()
-    local nvim_tmux_nav = require "nvim-tmux-navigation"
-
-    nvim_tmux_nav.setup {
-      disable_when_zoomed = true, -- defaults to false
-    }
-
-    vim.keymap.set("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-    vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-    vim.keymap.set("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-    vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-  end,
+  opts = {
+    disable_when_zoomed = true,
+  },
+  keys = {
+    {
+      "<C-h>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
+      end,
+    },
+    {
+      "<C-j>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateDown()
+      end,
+    },
+    {
+      "<C-k>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateUp()
+      end,
+    },
+    {
+      "<C-l>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateRight()
+      end,
+    },
+  },
 }
