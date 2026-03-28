@@ -6,5 +6,13 @@ return {
   dependencies = { "nvim-treesitter/nvim-treesitter" },
   ---@module 'render-markdown'
   ---@type render.md.UserConfig
-  opts = {},
+  opts = {
+    win_options = {
+      foldmethod = { default = "expr", rendered = "expr" },
+      foldexpr = {
+        default = "v:lua.vim.treesitter.foldexpr()",
+        rendered = "v:lua.vim.treesitter.foldexpr()",
+      },
+    },
+  },
 }
