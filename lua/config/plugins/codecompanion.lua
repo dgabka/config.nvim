@@ -69,6 +69,11 @@ return {
               env = {
                 CLAUDE_CODE_OAUTH_TOKEN = "cmd:printf '%s' \"$(pass show anthropic/claude-code-token)\"",
               },
+              schema = {
+                model = {
+                  default = "claude-sonnet-4-6",
+                },
+              },
             })
           end,
         },
