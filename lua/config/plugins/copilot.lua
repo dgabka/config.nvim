@@ -1,9 +1,3 @@
-local host = require "config.utils.host"
-
-if not host.is_work() then
-  return {}
-end
-
 return {
   {
     "zbirenbaum/copilot.lua",
