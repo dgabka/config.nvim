@@ -128,6 +128,10 @@ return {
         return out
       end,
     },
+    checkbox = {
+      create_new = false,
+      order = { " ", "x" },
+    },
     ui = {
       enable = false,
       hl_groups = {}, -- hl_groups are set by the theme
