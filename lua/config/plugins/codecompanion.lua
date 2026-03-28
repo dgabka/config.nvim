@@ -47,13 +47,6 @@ return {
   end,
   opts = function()
     return {
-      prompt_library = {
-        markdown = {
-          dirs = {
-            vim.fn.getcwd() .. "/.prompts", -- Can be relative
-          },
-        },
-      },
       strategies = get_adapters(),
       adapters = {
         acp = {
