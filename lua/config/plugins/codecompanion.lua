@@ -1,6 +1,9 @@
 local function get_adapters()
   local host_utils = require "config.utils.host"
-  local adapter = host_utils.is_work() and "codex" or "claude_code"
+  local adapter = host_utils.is_work() and {
+    name = "copilot",
+    model = "claude-sonnet-4.6",
+  } or "claude_code"
 
   return {
     chat = { adapter = adapter },
@@ -71,6 +74,15 @@ return {
           end,
         },
         http = {
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-sonnet-4.6",
+                },
+              },
+            })
+          end,
           anthropic = function()
             return require("codecompanion.adapters").extend("anthropic", {
               name = "claude",
