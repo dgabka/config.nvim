@@ -37,6 +37,8 @@ stylua lua/
 
 Plugins are managed by `lazy.nvim`. Each plugin has its own file in `lua/config/plugins/`. The spec directory is auto-imported by lazy.nvim — adding a new `.lua` file there is sufficient to register a plugin.
 
+Local plugins can live under `local-plugins/` and be loaded via a `dir = ...` Lazy spec. `local-plugins/obsidian-tasks.nvim/` is the current example.
+
 ### Utilities
 
 - `lua/config/utils/host.lua` — hostname-based environment detection (`is_work()`, `is_home()`, `is_lab()`). Used to conditionally configure tools per machine (e.g., AI provider selection in `codecompanion.lua`).
@@ -52,6 +54,8 @@ Plugins are managed by `lazy.nvim`. Each plugin has its own file in `lua/config/
 - Requires `OBSIDIAN_VAULT` environment variable pointing to the vault directory.
 - `:Notes pull|push|review` commands for git sync and inbox review.
 - Interactive directory picker for moving notes between folders.
+
+Task editing and review are implemented separately in the local plugin `local-plugins/obsidian-tasks.nvim/`, configured by `lua/config/plugins/obsidian-tasks.lua`.
 
 ### Environment-Aware Config
 

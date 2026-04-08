@@ -1,0 +1,14 @@
+{
+  "task with created date": {
+    "prefix": "task",
+    "body": "- [ ] ${1:task}  [created:: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}]"
+  },
+  "task with due date": {
+    "prefix": "tdue",
+    "body": "- [ ] ${1:task}  [priority:: ${2:high}]  [due:: ${3:YYYY-MM-DD}]  [created:: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}]"
+  },
+  "meeting action item": {
+    "prefix": "tmeet",
+    "body": "- [ ] [[${1:dawid-gabka}|${2:Me}]] ${3:action}  [due:: ${4:YYYY-MM-DD}]  [created:: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}]"
+  }
+}
