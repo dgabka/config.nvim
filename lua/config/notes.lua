@@ -9,6 +9,9 @@ end
 local home_dir = os.getenv "HOME"
 local cwd = vim.fn.getcwd()
 local cwd_relative = home_dir ~= nil and string.gsub(cwd, home_dir, "~") or cwd
+local review_state = {
+  active = false,
+}
 
 -- do not load outside of OBSIDIAN_VAULT
 if cwd ~= notes_dir and cwd_relative ~= notes_dir then
@@ -43,11 +46,10 @@ local file_to_qflist = function(file_name)
   }
 end
 
+local move_note
+
 local function finish_review()
-  vim.keymap.del("n", "<leader>nm")
-  vim.keymap.del("n", "<leader>nd")
-  vim.keymap.del("n", "<leader>nr")
-  vim.keymap.del("n", "<leader>fr")
+  review_state.active = false
   pcall(vim.cmd.cclose)
 end
 
@@ -55,13 +57,17 @@ local function delete_note()
   local bufnr = vim.api.nvim_get_current_buf()
   local file_path = vim.api.nvim_buf_get_name(bufnr)
   local file_name = vim.fs.basename(file_path)
-  local ok = pcall(vim.cmd.cnext)
+
   vim.api.nvim_buf_delete(bufnr, { force = true })
   vim.fs.rm(file_path)
-  vim.cmd.packadd "cfilter"
-  vim.cmd('Cfilter! "' .. file_name .. '"')
-  if not ok then
-    finish_review()
+
+  if review_state.active then
+    local ok = pcall(vim.cmd.cnext)
+    vim.cmd.packadd "cfilter"
+    vim.cmd('Cfilter! "' .. file_name .. '"')
+    if not ok then
+      finish_review()
+    end
   end
 end
 
@@ -82,11 +88,13 @@ local function move_file(target_dir, bufnr)
   vim.api.nvim_buf_delete(bufnr, { force = true })
   vim.cmd.edit(vim.fn.fnameescape(target))
 
-  local ok2 = pcall(vim.cmd.cnext)
-  vim.cmd.packadd "cfilter"
-  vim.cmd('Cfilter! "' .. file_name .. '"')
-  if not ok2 then
-    finish_review()
+  if review_state.active then
+    local ok2 = pcall(vim.cmd.cnext)
+    vim.cmd.packadd "cfilter"
+    vim.cmd('Cfilter! "' .. file_name .. '"')
+    if not ok2 then
+      finish_review()
+    end
   end
 end
 
@@ -138,7 +146,7 @@ function pick_dir(path, bufnr)
   end)
 end
 
-local function move_note()
+move_note = function()
   local bufnr = vim.api.nvim_get_current_buf()
   pick_dir(cwd, bufnr)
 end
@@ -146,6 +154,8 @@ end
 local function review_inbox()
   local inbox_notes = {}
   local len = 0
+
+  review_state.active = false
 
   for name, _type in vim.fs.dir(inbox) do
     if _type == "file" and name:match "%.md$" then
@@ -159,12 +169,7 @@ local function review_inbox()
     return
   end
 
-  vim.keymap.set("n", "<leader>nm", move_note, { desc = "Move note" })
-  vim.keymap.set("n", "<leader>nd", delete_note, { desc = "Delete note" })
-  vim.keymap.set("n", "<leader>nr", function()
-    vim.cmd "CodeCompanion /review-note"
-  end, { desc = "Delete note" })
-  vim.keymap.set("n", "<leader>fr", finish_review, { desc = "Finish review" })
+  review_state.active = true
 
   vim.fn.setqflist(inbox_notes, " ")
   vim.fn.setqflist({}, "a", { title = "Inbox" })
@@ -190,6 +195,16 @@ local function run_command(cmd)
     review_inbox()
   end
 end
+
+vim.keymap.set("n", "<leader>nm", move_note, { desc = "Move note" })
+vim.keymap.set("n", "<leader>nd", delete_note, { desc = "Delete note" })
+vim.keymap.set("n", "<leader>nr", function()
+  vim.cmd "CodeCompanion /review-note"
+end, { desc = "Review note" })
+vim.keymap.set("n", "<leader>nf", finish_review, { desc = "Finish review" })
+vim.keymap.set("n", "<leader>np", "<cmd>Notes pull<CR>", { desc = "Pull notes" })
+vim.keymap.set("n", "<leader>nP", "<cmd>Notes push<CR>", { desc = "Push notes" })
+vim.keymap.set("n", "<leader>ni", "<cmd>Notes review<CR>", { desc = "Review inbox" })
 
 vim.api.nvim_create_user_command("Notes", function(data)
   if #data.fargs == 0 then
