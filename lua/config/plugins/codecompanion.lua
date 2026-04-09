@@ -51,6 +51,13 @@ return {
   opts = function()
     return {
       strategies = get_adapters(),
+      prompt_library = {
+        markdown = {
+          dirs = {
+            vim.fn.stdpath "config" .. "/.prompts",
+          },
+        },
+      },
       adapters = {
         acp = {
           codex = function()
