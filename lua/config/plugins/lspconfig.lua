@@ -52,7 +52,7 @@ return {
         documentFormattingProvider = false,
       },
       on_attach = function()
-        vim.keymap.set("n", "<leader>lo", "<cmd>VtsExec organize_imports<CR>", { desc = "Ogranize Imports" })
+        vim.keymap.set("n", "<leader>lo", "<cmd>VtsExec organize_imports<CR>", { desc = "Organize imports" })
         vim.keymap.set("n", "<leader>la", "<cmd>VtsExec add_missing_imports<CR>", { desc = "Add Missing Imports" })
         vim.keymap.set("n", "<leader>lr", "<cmd>VtsExec rename_file<CR>", { desc = "Rename File" })
       end,
@@ -99,7 +99,13 @@ return {
     })
     vim.lsp.enable "nil_ls"
 
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
     vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
     vim.keymap.set("n", "gT", vim.lsp.buf.type_definition)
+    vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, { desc = "Code Action" })
+    vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
   end,
 }

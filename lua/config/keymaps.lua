@@ -1,6 +1,6 @@
 local set = vim.keymap.set
 
-set("n", "<leader>-", ":Oil<CR>")
+set("n", "<leader>-", ":Oil<CR>", { desc = "Oil" })
 
 -- quickfix list
 set("n", "<leader>co", ":copen<CR>", { desc = "Open" })
@@ -13,19 +13,19 @@ set("v", "J", ":m '>+1<CR>gv=gv")
 set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- replace paste without overwriting register
-set("x", "<leader>p", [["_dP]])
+set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
 
 -- yank to system clipboard
 set("v", "<leader>y", [["+y]], { desc = "Yank to clipboard" })
 set("n", "<leader>y", [["+Y]], { desc = "Yank line to clipboard" })
 
 -- toggle inlay_hints
-set("n", "<space>tt", function()
+set("n", "<leader>ui", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 }, { bufnr = 0 })
-end)
+end, { desc = "Toggle inlay hints" })
 
 -- toggle line wrap
-set("n", "<leader>tw", function()
+set("n", "<leader>uw", function()
   vim.wo.wrap = not vim.wo.wrap
 end, { desc = "Toggle wrap" })
 

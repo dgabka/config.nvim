@@ -78,8 +78,48 @@ return {
       end,
       desc = "Type Definitions",
     },
-    { "<leader>fg", function() require("telescope.builtin").live_grep() end, desc = "Grep" },
-    { "<leader>fb", function() require("telescope.builtin").buffers() end, desc = "Buffers" },
+    {
+      "<leader>fg",
+      function()
+        require("telescope.builtin").live_grep()
+      end,
+      desc = "Grep",
+    },
+    {
+      "<leader>fb",
+      function()
+        require("telescope.builtin").buffers()
+      end,
+      desc = "Buffers",
+    },
+    {
+      "<leader>fh",
+      function()
+        require("telescope.builtin").help_tags(get_dropdown())
+      end,
+      desc = "Help tags",
+    },
+    {
+      "<leader>fo",
+      function()
+        require("telescope.builtin").oldfiles(get_ivy())
+      end,
+      desc = "Recent files",
+    },
+    {
+      "<leader>fw",
+      function()
+        require("telescope.builtin").grep_string()
+      end,
+      desc = "Word under cursor",
+    },
+    {
+      "<leader>f/",
+      function()
+        require("telescope.builtin").current_buffer_fuzzy_find(get_dropdown())
+      end,
+      desc = "Search current buffer",
+    },
     {
       "<leader>fD",
       function()

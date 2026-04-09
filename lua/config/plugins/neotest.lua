@@ -11,12 +11,40 @@ return {
   },
 
   keys = {
-    { "<leader>tn", ":Neotest run<CR>", desc = "Neotest run nearest" },
-    { "<leader>tf", ":Neotest run file<CR>", desc = "Neotest run file" },
+    {
+      "<leader>tn",
+      function()
+        require("neotest").run.run()
+      end,
+      desc = "Run nearest test",
+    },
+    {
+      "<leader>tf",
+      function()
+        require("neotest").run.run(vim.fn.expand "%")
+      end,
+      desc = "Run test file",
+    },
+    {
+      "<leader>ta",
+      function()
+        require("neotest").run.run(vim.fn.getcwd())
+      end,
+      desc = "Run test suite",
+    },
+    {
+      "<leader>tl",
+      function()
+        require("neotest").run.run_last()
+      end,
+      desc = "Run last test",
+    },
   },
 
   config = function()
-    require("neotest").setup {
+    local neotest = require "neotest"
+
+    neotest.setup {
       adapters = {
         require "neotest-vitest",
         require "rustaceanvim.neotest",
@@ -24,13 +52,13 @@ return {
     }
 
     vim.keymap.set("n", "<leader>ts", function()
-      require("neotest").run.stop()
-    end, { desc = "Stop Test" })
+      neotest.summary.toggle()
+    end, { desc = "Toggle test summary" })
     vim.keymap.set("n", "<leader>to", function()
-      require("neotest").output.open { enter = true }
-    end, { desc = "Show Output" })
-    vim.keymap.set("n", "<leader>tsu", function()
-      require("neotest").summary.toggle()
-    end, { desc = "Toggle Summary" })
+      neotest.output.open { enter = true }
+    end, { desc = "Show test output" })
+    vim.keymap.set("n", "<leader>tx", function()
+      neotest.run.stop()
+    end, { desc = "Stop test run" })
   end,
 }

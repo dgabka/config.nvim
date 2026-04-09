@@ -47,8 +47,8 @@ return {
           gitsigns.blame_line { full = true }
         end, { desc = "Blame" })
 
-        map("n", "<leader>hq", gitsigns.setqflist)
-        map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle blame inline hint" })
+        map("n", "<leader>hq", gitsigns.setqflist, { desc = "Hunks to quickfix" })
+        map("n", "<leader>ub", gitsigns.toggle_current_line_blame, { desc = "Toggle blame inline hint" })
         map("n", "<leader>hd", gitsigns.diffthis, { desc = "Diff" })
       end,
     }
