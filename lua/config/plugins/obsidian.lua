@@ -80,9 +80,10 @@ return {
     daily_notes = {
       folder = "40-journal",
       default_tags = { "journal" },
+      template = "daily-note.md",
     },
     templates = {
-      subdir = "templates",
+      subdir = "_templates",
       date_format = date_format,
       time_format = time_format,
       customizations = {
@@ -93,6 +94,7 @@ return {
           end,
         },
       },
+      substitutions = {},
     },
     completion = {
       blink = true,
@@ -132,9 +134,10 @@ return {
       create_new = false,
       order = { " ", "x" },
     },
+    ---@diagnostic disable-next-line: missing-fields
     ui = {
       enable = false,
-      hl_groups = {}, -- hl_groups are set by the theme
+      hl_groups = {}, -- hl_aroups are set by the theme
     },
   },
 }
