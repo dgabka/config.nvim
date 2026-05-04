@@ -25,7 +25,7 @@ return {
       return os.getenv "OBSIDIAN_VAULT"
     end,
     metadata_format = "dataview",
-    exclude_globs = { ".obsidian/**", "templates/**" },
+    exclude_globs = { ".obsidian/**", ".templates/**", "_templates/**", "templates/**" },
     done_heading = "## Done",
     done_heading_pattern = "^## Done%s*$",
   },
