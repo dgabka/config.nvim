@@ -17,6 +17,37 @@ return {
       treesitter.setup {
         install_dir = vim.fs.joinpath(vim.fn.stdpath "data", "site"),
       }
+      require("nvim-treesitter").install {
+        "bash",
+        "javascript",
+        "lua",
+        "json",
+        "markdown",
+        "nix",
+        "typescript",
+        "vimdoc",
+        "yaml",
+        "python",
+        "html",
+        "dockerfile",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
+        "hcl",
+        "markdown_inline",
+        "mermaid",
+        "nginx",
+        "rust",
+        "sql",
+        "ssh_config",
+        "terraform",
+        "tmux",
+        "toml",
+        "tsx",
+        "zsh",
+      }
 
       local treesitter_group = vim.api.nvim_create_augroup("config_treesitter", { clear = true })
 
