@@ -72,15 +72,37 @@ return {
     vim.lsp.config("yamlls", {
       settings = {
         yaml = {
-          schemaStore = { enable = true },
-          schemas = require("schemastore").yaml.schemas {
-            extra = {
-              {
-                url = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json",
-                name = "Gitlab CI",
-                fileMatch = ".gitlab-ci/*",
-                description = "Gitlab CI Schema",
-              },
+          keyOrdering = false,
+          schemaStore = { enable = false },
+          schemas = {
+            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci/*",
+            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
+              "/compose.yaml",
+              "/compose.yml",
+              "/docker-compose.yaml",
+              "/docker-compose.yml",
+              "/**/compose.yaml",
+              "/**/compose.yml",
+              "/**/docker-compose.yaml",
+              "/**/docker-compose.yml",
+            },
+            kubernetes = {
+              "/k8s/*.yml",
+              "/k8s/*.yaml",
+              "/k8s/**/*.yml",
+              "/k8s/**/*.yaml",
+              "/kubernetes/*.yml",
+              "/kubernetes/*.yaml",
+              "/kubernetes/**/*.yml",
+              "/kubernetes/**/*.yaml",
+              "/manifests/*.yml",
+              "/manifests/*.yaml",
+              "/manifests/**/*.yml",
+              "/manifests/**/*.yaml",
+              "/deploy/*.yml",
+              "/deploy/*.yaml",
+              "/deploy/**/*.yml",
+              "/deploy/**/*.yaml",
             },
           },
         },
