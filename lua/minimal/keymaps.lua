@@ -73,12 +73,12 @@ set("v", "<leader>y", [["+y]], { desc = "Yank to clipboard" })
 set("n", "<leader>y", [["+Y]], { desc = "Yank line to clipboard" })
 
 -- toggle inlay_hints
-set("n", "<leader>ui", function()
+set("n", "<leader>ti", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 }, { bufnr = 0 })
 end, { desc = "Toggle inlay hints" })
 
 -- toggle line wrap
-set("n", "<leader>uw", function()
+set("n", "<leader>tw", function()
   vim.wo.wrap = not vim.wo.wrap
 end, { desc = "Toggle wrap" })
 
@@ -101,3 +101,8 @@ end, { expr = true })
 
 set("n", "<leader>dl", ":%diffget _LOCAL_<CR>", { desc = "Pick local changes" })
 set("n", "<leader>dr", ":%diffget _REMOTE_<CR>", { desc = "Pick changes from remote" })
+
+set("n", "<leader>u", function()
+  vim.cmd.packadd('nvim.undotree')
+  require("undotree").open()
+end, {desc = "Toggle Undotree" } )
