@@ -11,7 +11,10 @@ return {
         italic = false,
         transparent = false,
       },
-      overrides = {}
+      overrides = {
+        StatusLine = { bg = "NONE" },
+        StatusLineNC = { bg = "NONE" },
+      }
     }
     vim.cmd.colorscheme "sageveil"
   end,

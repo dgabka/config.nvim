@@ -1,3 +1,4 @@
+require "minimal.autocmds"
 require "minimal.options"
 require "minimal.lazy"
 require "minimal.keymaps"

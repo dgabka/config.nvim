@@ -1,0 +1,34 @@
+---@module "lazy"
+---@type LazySpec
+return {
+  "alexghergh/nvim-tmux-navigation",
+  opts = {
+    disable_when_zoomed = true,
+  },
+  keys = {
+    {
+      "<C-h>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
+      end,
+    },
+    {
+      "<C-j>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateDown()
+      end,
+    },
+    {
+      "<C-k>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateUp()
+      end,
+    },
+    {
+      "<C-l>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateRight()
+      end,
+    },
+  },
+}
