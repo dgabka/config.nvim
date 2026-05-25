@@ -1,5 +1,5 @@
-if vim.env.NVIM_MINI == "1" then
-  require "config-mini"
+if vim.env.NVIM_MINIMAL == "1" then
+  require "minimal"
 else
   require "config"
 end

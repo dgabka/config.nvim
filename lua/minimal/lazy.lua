@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup {
-  spec = "config-mini.plugins",
+  spec = "minimal.plugins",
   root = vim.fn.stdpath "data" .. "/lazy-mini",
   lockfile = vim.fn.stdpath "state" .. "/lazy-lock-mini.json",
   change_detection = { notify = false },

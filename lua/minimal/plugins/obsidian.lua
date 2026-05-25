@@ -1,4 +1,4 @@
-local slugify = require("config-mini.utils.str_utils").slugify
+local slugify = require("minimal.utils.str_utils").slugify
 
 local notes_dir = os.getenv "OBSIDIAN_VAULT"
 local enable_obsidian = notes_dir ~= nil and notes_dir ~= ""

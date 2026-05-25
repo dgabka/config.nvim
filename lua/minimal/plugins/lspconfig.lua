@@ -75,7 +75,8 @@ return {
           keyOrdering = false,
           schemaStore = { enable = false },
           schemas = {
-            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci/*",
+            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] =
+            ".gitlab-ci/*",
             ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
               "/compose.yaml",
               "/compose.yml",
@@ -129,5 +130,6 @@ return {
     vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, { desc = "Code Action" })
     vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, { desc = "Rename Symbol" })
     vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+    vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format Buffer" })
   end,
 }

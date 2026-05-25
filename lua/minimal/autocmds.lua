@@ -21,14 +21,3 @@ autocmd("FileChangedShellPost", {
     vim.notify(("File reloaded from disk: %s"):format(vim.fn.fnamemodify(file, ":.")), vim.log.levels.INFO)
   end,
 })
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown", "norg" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
-    vim.opt_local.breakindent = true
-    vim.opt_local.shiftwidth = 2 -- the number of spaces inserted for each indentation
-    vim.opt_local.tabstop = 2 -- insert 2 spaces for a tab
-  end,
-})
