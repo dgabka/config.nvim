@@ -103,6 +103,17 @@ set("n", "<leader>dl", ":%diffget _LOCAL_<CR>", { desc = "Pick local changes" })
 set("n", "<leader>dr", ":%diffget _REMOTE_<CR>", { desc = "Pick changes from remote" })
 
 set("n", "<leader>u", function()
-  vim.cmd.packadd('nvim.undotree')
+  vim.cmd.packadd "nvim.undotree"
   require("undotree").open()
-end, {desc = "Toggle Undotree" } )
+end, { desc = "Toggle Undotree" })
+
+vim.keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })
+
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "move down in buffer with cursor centered" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "move up in buffer with cursor centered" })
+
+vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result cursor centered" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result cursor centered" })
