@@ -50,23 +50,7 @@ return {
         "zsh",
       }
 
-      local treesitter_group = vim.api.nvim_create_augroup("config_treesitter", { clear = true })
-
-      vim.api.nvim_create_autocmd("FileType", {
-        group = treesitter_group,
-        callback = function(args)
-          if vim.bo[args.buf].buftype ~= "" then
-            return
-          end
-
-          local ok = pcall(vim.treesitter.start, args.buf)
-          if not ok then
-            return
-          end
-
-          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end,
-      })
+      require("treesitter_autoinstall").setup { group = "config_treesitter" }
 
       require("nvim-treesitter-textobjects").setup {
         select = {
