@@ -3,7 +3,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local checktime_group = augroup("config_autoread_checktime", { clear = true })
 
-autocmd({ "FocusGained", "TermClose", "TermLeave", "CursorHold", "CursorHoldI" }, {
+autocmd({ "FocusGained", "BufEnter", "TermClose", "TermLeave" }, {
   group = checktime_group,
   callback = function()
     if vim.fn.getcmdwintype() == "" and vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "" then
