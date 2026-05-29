@@ -25,7 +25,7 @@ stylua lua/
 
 ### Entry Point
 
-`init.lua` → `lua/config/init.lua`, which loads in order:
+`init.lua` loads the minimal profile by default (`lua/minimal/init.lua`). Use `NVIM_FULL=1` to load the full profile (`lua/config/init.lua`), which loads in order:
 1. `options.lua` — editor settings
 2. `lazy.lua` — bootstraps and initializes lazy.nvim
 3. `keymaps.lua` — global keybindings
