@@ -30,6 +30,17 @@ return {
 
     vim.lsp.enable "lua_ls"
 
+    vim.lsp.config("rust_analyzer", {
+      settings = {
+        ["rust-analyzer"] = {
+          files = {
+            excludeDirs = { ".direnv", "target" },
+          },
+        },
+      },
+    })
+    vim.lsp.enable "rust_analyzer"
+
     vim.lsp.config("vtsls", {
       settings = {
         typescript = {
@@ -75,8 +86,7 @@ return {
           keyOrdering = false,
           schemaStore = { enable = false },
           schemas = {
-            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] =
-            ".gitlab-ci/*",
+            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci/*",
             ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
               "/compose.yaml",
               "/compose.yml",
