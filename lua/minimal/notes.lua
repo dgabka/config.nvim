@@ -18,18 +18,22 @@ if cwd ~= notes_dir and cwd_relative ~= notes_dir then
   return
 end
 
+local function git(args)
+  vim.api.nvim_cmd({ cmd = "Git", args = args }, {})
+end
+
 local function pull_notes()
-  vim.cmd "Git stash push -m ':Notes pull stash'"
-  vim.cmd "Git pull"
-  vim.cmd "Git stash pop"
+  git { "stash", "push", "-m", ":Notes pull stash" }
+  git { "pull" }
+  git { "stash", "pop" }
 end
 
 local function push_notes()
   local date = os.date "%Y-%m-%d"
   local commit_msg = date .. " notes"
-  vim.cmd "Git add ."
-  vim.cmd("Git commit -m '" .. commit_msg .. "'")
-  vim.cmd "Git push"
+  git { "add", "." }
+  git { "commit", "-m", commit_msg }
+  git { "push" }
 end
 
 ---@param file_name string of the file to add
