@@ -88,7 +88,7 @@ return {
       time_format = time_format,
       customizations = {
         person = {
-          notes_subdir = "20-areas/work/people",
+          notes_subdir = "20-areas/people",
           note_id_func = function(title)
             return slugify(title)
           end,
@@ -97,10 +97,12 @@ return {
       substitutions = {},
     },
     completion = {
-      blink = true,
       min_chars = 2,
       match_case = true,
       create_new = true,
+    },
+    link = {
+      auto_update = true
     },
     picker = {
       name = "telescope.nvim",
