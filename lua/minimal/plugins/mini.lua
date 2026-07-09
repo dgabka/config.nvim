@@ -88,6 +88,7 @@ return {
     }
     MiniSnippets.start_lsp_server { match = false }
     require("mini.completion").setup()
+    vim.o.completeopt = "menuone,noinsert"
 
     local clue = require "mini.clue"
     clue.setup {
