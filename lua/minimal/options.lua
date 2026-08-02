@@ -8,6 +8,7 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.cursorline = true -- highlight the current line
+vim.opt.guicursor = "a:block,i:blinkwait700-blinkoff400-blinkon250-block"
 vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 2 -- insert 2 spaces for a tab
 vim.opt.smartindent = true
