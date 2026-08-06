@@ -40,8 +40,25 @@ end, { desc = "Type Definitions" })
 set("n", "<leader>fg", function()
   MiniPick.builtin.grep_live()
 end, { desc = "Grep" })
+set("n", "<leader>bd", "<cmd>bd<CR>", { desc = "Delete buffer" })
 set("n", "<leader>fb", function()
-  MiniPick.builtin.buffers()
+  MiniPick.builtin.buffers({}, {
+    mappings = {
+      delete_buf = {
+        char = "<C-d>",
+        func = function()
+          local item = MiniPick.get_picker_matches().current
+          if item then
+            vim.api.nvim_buf_delete(item.bufnr, { force = false })
+            -- ponytail: restart picker to refresh list after deletion
+            MiniPick.set_picker_items(vim.tbl_filter(function(b)
+              return vim.api.nvim_buf_is_valid(b.bufnr)
+            end, MiniPick.get_picker_items()))
+          end
+        end,
+      },
+    },
+  })
 end, { desc = "Buffers" })
 set("n", "<leader>fh", function()
   MiniPick.builtin.help()
