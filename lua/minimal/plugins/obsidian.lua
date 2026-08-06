@@ -48,7 +48,7 @@ return {
     -- Paste image
     { "<leader>op", "<cmd>Obsidian paste_img<cr>", desc = "Obsidian Paste image" },
     -- Table of contents
-    { "<leader>otc", "<cmd>Obsidian toc<cr>", desc = "Obsidian Table of Contents" },
+    { "<leader>oC", "<cmd>Obsidian toc<cr>", desc = "Obsidian Table of Contents" },
     -- Workspace
     { "<leader>ow", "<cmd>Obsidian workspace<cr>", desc = "Obsidian Workspace" },
   },
@@ -102,7 +102,7 @@ return {
       create_new = true,
     },
     link = {
-      auto_update = true
+      auto_update = true,
     },
     picker = {
       name = "mini.pick",
