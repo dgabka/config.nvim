@@ -59,6 +59,31 @@ set("n", "<leader>fD", function()
   MiniExtra.pickers.diagnostic { scope = "all" }
 end, { desc = "Workspace Diagnostics" })
 
+-- git hunks
+set("n", "]c", function()
+  MiniDiff.goto_hunk "next"
+end, { desc = "Next hunk" })
+set("n", "[c", function()
+  MiniDiff.goto_hunk "prev"
+end, { desc = "Previous hunk" })
+
+local function hunk(action)
+  local line = vim.fn.line "."
+  MiniDiff.do_hunks(0, action, { line_start = line, line_end = line })
+end
+
+set("n", "<leader>hs", function()
+  hunk "apply"
+end, { desc = "Stage hunk" })
+set("n", "<leader>hr", function()
+  hunk "reset"
+end, { desc = "Reset hunk" })
+set("n", "<leader>hp", MiniDiff.toggle_overlay, { desc = "Toggle hunk preview" })
+set("n", "<leader>hb", function()
+  local line = vim.fn.line "."
+  vim.cmd(("Git blame -L %d,%d -- %%"):format(line, line))
+end, { desc = "Blame line" })
+
 -- quickfix list
 set("n", "<leader>co", ":copen<CR>", { desc = "Open" })
 set("n", "<leader>cn", ":cnext<CR>", { desc = "Next" })
@@ -109,6 +134,8 @@ end, { desc = "Toggle Undotree" })
 
 vim.keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
 
