@@ -11,8 +11,8 @@
     "prefix": "tmeet",
     "body": "- [ ] [[${1:dawid-gabka}|${2:Me}]] ${3:action}  [due:: ${4:YYYY-MM-DD}]  [created:: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}]"
   },
-  "horizon ticket": {
-    "prefix": "hrz",
-    "body": "[HRZ-${1:number}](https://evokeplc.atlassian.net/browse/HRZ-${1:number})"
+  "alab ticket": {
+    "prefix": "alab",
+    "body": "[ALAB-${1:number}](https://evokeplc.atlassian.net/browse/ALAB-${1:number})"
   }
 }
