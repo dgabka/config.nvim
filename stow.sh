@@ -20,11 +20,11 @@ STOW_CMD=""
 if [ -x "$(command -v stow)" ]; then
     STOW_CMD="stow"
 elif [ -x "$(command -v nix)" ]; then
-    STOW_CMD="nix run nixkpgs#stow --"
+    STOW_CMD="nix run nixpkgs#stow --"
 fi
 
 if ! [ -n "$STOW_CMD" ]; then
-    echo "GNU Stow not found in $\PATH"
+    echo "GNU Stow not found in \$PATH"
     exit 1
 fi
 

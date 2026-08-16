@@ -113,7 +113,7 @@ return {
       func = function(note)
         local path_relative = note.path.vault_relative_path(note.path) or ""
         -- ignore .prompts directory
-        if string.find(path_relative, ".prompts") ~= nil then
+        if string.find(path_relative, ".prompts", 1, true) ~= nil then
           return note.metadata
         end
 

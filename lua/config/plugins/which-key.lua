@@ -1,3 +1,21 @@
+local groups = {
+  { "<leader>c", group = "Quickfix" },
+  { "<leader>d", group = "Diff" },
+  { "<leader>f", group = "Find" },
+  { "<leader>g", group = "Git" },
+  { "<leader>h", group = "Hunks", mode = { "n", "v" } },
+  { "<leader>l", group = "LSP" },
+  { "<leader>u", group = "Toggles" },
+}
+
+local vault = os.getenv "OBSIDIAN_VAULT"
+if vault and vault ~= "" then
+  vim.list_extend(groups, {
+    { "<leader>n", group = "Notes" },
+    { "<leader>o", group = "Obsidian" },
+  })
+end
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -5,22 +23,9 @@ return {
   event = "VeryLazy",
   opts = {
     delay = 300,
-    spec = {
-      { "<leader>c", group = "Quickfix" },
-      { "<leader>d", group = "Diff" },
-      { "<leader>f", group = "Find" },
-      { "<leader>g", group = "Git" },
-      { "<leader>h", group = "Hunks", mode = { "n", "v" } },
-      { "<leader>l", group = "LSP" },
-      { "<leader>n", group = "Notes" },
-      { "<leader>o", group = "Obsidian" },
-      { "<leader>t", group = "Tests" },
-      { "<leader>u", group = "Toggles" },
-    },
+    spec = groups,
     plugins = {
-      spelling = {
-        enabled = true,
-      },
+      spelling = { enabled = true },
     },
   },
 }

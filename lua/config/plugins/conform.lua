@@ -2,52 +2,47 @@
 ---@type LazyPluginSpec
 return {
   "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo" },
+  event = "BufWritePre",
+  cmd = "ConformInfo",
   keys = {
     {
       "<leader>lf",
       function()
-        require("conform").format { async = true }
+        require("conform").format { async = true, lsp_format = "fallback" }
       end,
-      mode = "",
       desc = "Format buffer",
     },
   },
-  -- This will provide type hinting with LuaLS
-  ---@module "conform"
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
       javascript = { "prettierd" },
-      typescript = { "prettierd" },
       javascriptreact = { "prettierd" },
+      typescript = { "prettierd" },
       typescriptreact = { "prettierd" },
-      swift = { "swiftformat" },
+      css = { "prettierd" },
+      scss = { "prettierd" },
+      html = { "prettierd" },
+      json = { "prettierd" },
+      jsonc = { "prettierd" },
+      markdown = { "prettierd" },
       nix = { "alejandra" },
       yaml = { "yamlfmt" },
       bash = { "shfmt" },
+      sh = { "shfmt" },
       zsh = { "shfmt" },
-      terraform = { "terraform_fmt" },
-      hcl = { "terragrunt_hclfmt" },
-      html = { lsp_fallback = true },
       rust = { "rustfmt" },
-      python = { "black" },
     },
     formatters = {
       yamlfmt = {
-        options = {
-          retain_line_breaks = true,
-        },
+        options = { retain_line_breaks = true },
       },
     },
     format_on_save = function(bufnr)
-      local ignore_filetypes = { "oil" }
-      if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+      if vim.bo[bufnr].filetype == "oil" then
         return
       end
-
-      return { timeout_ms = 500, lsp_fallback = true }
+      return { timeout_ms = 500, lsp_format = "fallback" }
     end,
   },
 }

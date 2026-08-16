@@ -3,8 +3,7 @@
 return {
   "tpope/vim-fugitive",
   keys = {
-    { "<leader>gs", "<cmd>0G<CR>", desc = "Fugitive satus" },
-    { "<leader>gl", "<cmd>0Gclog<CR>", desc = "File revision history" },
+    { "<leader>gs", "<cmd>0G<CR>", desc = "Git status" },
   },
-  cmd = { "Git", "G" }, -- Ensure Fugitive loads for :Git and :G commands
+  cmd = { "Git", "G" },
 }

@@ -38,6 +38,6 @@ return {
       lualine_y = { "filetype", "location" },
       lualine_z = { obsession_status },
     },
-    extensions = { "fugitive", "nvim-dap-ui", "oil", "trouble" },
+    extensions = { "fugitive", "oil" },
   },
 }

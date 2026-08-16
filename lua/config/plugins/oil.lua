@@ -2,28 +2,14 @@
 ---@type LazySpec
 return {
   "stevearc/oil.nvim",
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-  },
-  keys = { { "<leader>-", ":Oil<CR>", desc = "Oil" } },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  keys = { { "<leader>-", "<cmd>Oil<CR>", desc = "Oil" } },
   cmd = "Oil",
   opts = {
     view_options = {
       show_hidden = true,
-      -- This function defines what is considered a "hidden" file
-      is_hidden_file = function(name, bufnr)
-        return vim.startswith(name, ".")
-      end,
-      -- This function defines what will never be shown, even when `show_hidden` is set
-      is_always_hidden = function(name, bufnr)
-        if name == ".." then
-          return true
-        elseif name == ".git" then
-          return true
-        elseif name == ".DS_Store" then
-          return true
-        end
-        return false
+      is_always_hidden = function(name)
+        return name == ".." or name == ".git" or name == ".DS_Store"
       end,
     },
     use_default_keymaps = false,
@@ -31,11 +17,9 @@ return {
       ["g?"] = { "actions.show_help", mode = "n" },
       ["<CR>"] = "actions.select",
       ["<C-s>"] = { "actions.select", opts = { vertical = true } },
-      -- ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
       ["<C-t>"] = { "actions.select", opts = { tab = true } },
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = { "actions.close", mode = "n" },
-      -- ["<C-l>"] = "actions.refresh",
       ["-"] = { "actions.parent", mode = "n" },
       ["_"] = { "actions.open_cwd", mode = "n" },
       ["`"] = { "actions.cd", mode = "n" },

@@ -3,13 +3,12 @@
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
+    "saghen/blink.cmp",
     {
       "folke/lazydev.nvim",
-      ft = "lua", -- only load on lua files
+      ft = "lua",
       opts = {
         library = {
-          -- See the configuration section for more details
-          -- Load luvit types when the `vim.uv` word is found
           { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         },
       },
@@ -19,24 +18,30 @@ return {
   },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    vim.lsp.enable "cssls"
-    vim.lsp.enable "html"
-    vim.lsp.enable "pyright"
-    vim.lsp.enable "bashls"
-    vim.lsp.enable "marksman"
-    vim.lsp.enable "dockerls"
-    vim.lsp.enable "eslint"
-    vim.lsp.enable "terraformls"
+    vim.lsp.config("*", {
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
+    })
 
-    vim.lsp.enable "lua_ls"
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("config_lsp_attach", { clear = true }),
+      callback = function(event)
+        local opts = { buffer = event.buf }
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Definition" }))
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Declaration" }))
+        vim.keymap.set(
+          "n",
+          "<leader>ld",
+          vim.diagnostic.open_float,
+          vim.tbl_extend("force", opts, { desc = "Line diagnostics" })
+        )
+      end,
+    })
 
     vim.lsp.config("vtsls", {
       settings = {
         typescript = {
           tsserver = {
-            experimental = {
-              enableProjectDiagnostics = true,
-            },
+            experimental = { enableProjectDiagnostics = true },
           },
           inlayHints = {
             parameterNames = { enabled = "literals" },
@@ -48,16 +53,30 @@ return {
           },
         },
       },
-      server_capabilities = {
-        documentFormattingProvider = false,
-      },
-      on_attach = function()
-        vim.keymap.set("n", "<leader>lo", "<cmd>VtsExec organize_imports<CR>", { desc = "Organize imports" })
-        vim.keymap.set("n", "<leader>la", "<cmd>VtsExec add_missing_imports<CR>", { desc = "Add Missing Imports" })
-        vim.keymap.set("n", "<leader>lr", "<cmd>VtsExec rename_file<CR>", { desc = "Rename File" })
+      on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        local opts = { buffer = bufnr }
+        vim.keymap.set(
+          "n",
+          "<leader>lo",
+          "<cmd>VtsExec organize_imports<CR>",
+          vim.tbl_extend("force", opts, { desc = "Organize imports" })
+        )
+        vim.keymap.set(
+          "n",
+          "<leader>la",
+          "<cmd>VtsExec add_missing_imports<CR>",
+          vim.tbl_extend("force", opts, { desc = "Add missing imports" })
+        )
+        vim.keymap.set(
+          "n",
+          "<leader>lr",
+          "<cmd>VtsExec rename_file<CR>",
+          vim.tbl_extend("force", opts, { desc = "Rename file" })
+        )
       end,
     })
-    vim.lsp.enable "vtsls"
 
     vim.lsp.config("jsonls", {
       settings = {
@@ -67,67 +86,50 @@ return {
         },
       },
     })
-    vim.lsp.enable "jsonls"
 
+    local yaml_schemas = require("schemastore").yaml.schemas()
+    yaml_schemas.kubernetes = {
+      "k8s/**/*.yaml",
+      "k8s/**/*.yml",
+      "kubernetes/**/*.yaml",
+      "kubernetes/**/*.yml",
+      "manifests/**/*.yaml",
+      "manifests/**/*.yml",
+      "deploy/**/*.yaml",
+      "deploy/**/*.yml",
+    }
     vim.lsp.config("yamlls", {
       settings = {
         yaml = {
           keyOrdering = false,
-          schemaStore = { enable = false },
-          schemas = {
-            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci/*",
-            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
-              "/compose.yaml",
-              "/compose.yml",
-              "/docker-compose.yaml",
-              "/docker-compose.yml",
-              "/**/compose.yaml",
-              "/**/compose.yml",
-              "/**/docker-compose.yaml",
-              "/**/docker-compose.yml",
-            },
-            kubernetes = {
-              "/k8s/*.yml",
-              "/k8s/*.yaml",
-              "/k8s/**/*.yml",
-              "/k8s/**/*.yaml",
-              "/kubernetes/*.yml",
-              "/kubernetes/*.yaml",
-              "/kubernetes/**/*.yml",
-              "/kubernetes/**/*.yaml",
-              "/manifests/*.yml",
-              "/manifests/*.yaml",
-              "/manifests/**/*.yml",
-              "/manifests/**/*.yaml",
-              "/deploy/*.yml",
-              "/deploy/*.yaml",
-              "/deploy/**/*.yml",
-              "/deploy/**/*.yaml",
-            },
-          },
+          schemaStore = { enable = false, url = "" },
+          schemas = yaml_schemas,
         },
       },
     })
-    vim.lsp.enable "yamlls"
 
     vim.lsp.config("nil_ls", {
       settings = {
         ["nil"] = {
-          formatting = {
-            command = { "alejandra" },
-          },
+          formatting = { command = { "alejandra" } },
         },
       },
     })
-    vim.lsp.enable "nil_ls"
 
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
-    vim.keymap.set("n", "gT", vim.lsp.buf.type_definition)
-    vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, { desc = "Code Action" })
-    vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, { desc = "Rename Symbol" })
-    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+    for _, server in ipairs {
+      "bashls",
+      "cssls",
+      "dockerls",
+      "eslint",
+      "html",
+      "jsonls",
+      "lua_ls",
+      "marksman",
+      "nil_ls",
+      "vtsls",
+      "yamlls",
+    } do
+      vim.lsp.enable(server)
+    end
   end,
 }
