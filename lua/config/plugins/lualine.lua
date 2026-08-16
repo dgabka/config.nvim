@@ -10,7 +10,7 @@ local function diff_source()
 end
 
 local function obsession_status()
-  if vim.fn.exists("*ObsessionStatus") == 0 then
+  if vim.fn.exists "*ObsessionStatus" == 0 then
     return ""
   end
 

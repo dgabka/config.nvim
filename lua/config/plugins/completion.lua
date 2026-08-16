@@ -43,7 +43,9 @@ return {
       menu = {
         draw = {
           columns = {
-            { "kind_icon", gap = 1, "label", "kind" },
+            { "kind_icon" },
+            { "label" },
+            { "kind" },
           },
         },
       },
