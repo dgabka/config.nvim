@@ -16,10 +16,10 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
-      javascript = { "prettierd" },
-      javascriptreact = { "prettierd" },
-      typescript = { "prettierd" },
-      typescriptreact = { "prettierd" },
+      javascript = { "biome", "prettierd", stop_after_first = true },
+      javascriptreact = { "biome", "prettierd", stop_after_first = true },
+      typescript = { "biome", "prettierd", stop_after_first = true },
+      typescriptreact = { "biome", "prettierd", stop_after_first = true },
       css = { "prettierd" },
       scss = { "prettierd" },
       html = { "prettierd" },
@@ -34,6 +34,7 @@ return {
       rust = { "rustfmt" },
     },
     formatters = {
+      biome = { require_cwd = true },
       yamlfmt = {
         options = { retain_line_breaks = true },
       },
