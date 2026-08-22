@@ -16,6 +16,7 @@ return {
   keys = {
     { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Working tree diff" },
     { "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", desc = "File history" },
+    { "<leader>gH", "<cmd>DiffviewFileHistory<CR>", desc = "Repository history" },
     {
       "<leader>gR",
       function()
