@@ -101,6 +101,9 @@ return {
       match_case = true,
       create_new = true,
     },
+    cache = {
+      enabled = true,
+    },
     link = {
       auto_update = true,
     },
