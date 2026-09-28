@@ -107,9 +107,6 @@ return {
     link = {
       auto_update = true,
     },
-    picker = {
-      name = "telescope.nvim",
-    },
     frontmatter = {
       enabled = true,
       sort = { "id", "aliases", "tags", "created", "updated" },
