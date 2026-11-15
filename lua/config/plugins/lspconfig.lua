@@ -118,14 +118,17 @@ return {
 
     for _, server in ipairs {
       "bashls",
+      "clangd",
       "cssls",
       "dockerls",
       "eslint",
       "html",
+      "jdtls",
       "jsonls",
       "lua_ls",
       "marksman",
       "nil_ls",
+      "pyright",
       "vtsls",
       "yamlls",
     } do

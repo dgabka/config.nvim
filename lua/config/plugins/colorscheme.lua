@@ -1,7 +1,8 @@
 ---@module "lazy"
 ---@type LazySpec
 return {
-  "sageveil/nvim",
+  -- "sageveil/nvim",
+  dir = "~/repos/sageveil.git/main/dist/ports/nvim",
   name = "sageveil",
   lazy = false,
   priority = 1000,
@@ -14,4 +15,7 @@ return {
     }
     vim.cmd.colorscheme "sageveil"
   end,
+  dependencies = {
+    "norcalli/nvim-colorizer.lua",
+  },
 }
