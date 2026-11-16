@@ -129,6 +129,7 @@ return {
       "marksman",
       "nil_ls",
       "pyright",
+      "ruff",
       "vtsls",
       "yamlls",
     } do
