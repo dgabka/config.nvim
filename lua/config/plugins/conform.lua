@@ -32,6 +32,7 @@ return {
       sh = { "shfmt" },
       zsh = { "shfmt" },
       rust = { "rustfmt" },
+      python = { "ruff_format" },
     },
     formatters = {
       biome = { require_cwd = true },
